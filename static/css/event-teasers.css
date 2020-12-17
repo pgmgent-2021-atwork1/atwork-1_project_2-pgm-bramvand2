@@ -1,0 +1,81 @@
+.event-teasers__container {
+    margin-top: 5rem;
+    padding: 0.75rem;
+}
+
+.event-teasers {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+ .teaser {
+    width: 100%;
+    margin: 0.75rem;  
+    display: flex;
+    flex-wrap: wrap;
+}
+
+@media (min-width: 52rem) {
+    .teaser {
+        width: 47%;
+    }
+}
+
+@media (min-width: 65rem) {
+    .teaser {
+        width: 31.9%;
+    }
+}
+
+.teaser a{
+    width: 100%;
+    color: #000;
+}
+
+
+
+.teaser h3 {
+    font-size: 1.8rem;
+    font-weight: 900;
+}
+
+.teaser p {
+    margin-top: 1rem;
+    font-weight: 400;
+}
+
+.teaser__container {
+    width: 100%;
+    position: relative;
+    margin-bottom: 3rem;
+}
+
+.teaser__image-wrapper {    
+    width: 100%;
+    overflow: hidden;
+    max-height:20rem;
+}
+
+.teaser__image {
+    background-color: #000;
+    object-fit: cover;
+    object-position: center;
+    width: 100%;
+    height: 100%;    
+    transition: all 0.2s ease;
+}
+
+.teaser a:hover .teaser__image{
+    transform: scale(1.1);
+}
+
+.teaser__date {
+    position: absolute;
+    bottom: -1rem;
+    left: 1.5rem;
+    padding: 0.5rem 1rem;
+    background-color: #000;
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: 700;
+}

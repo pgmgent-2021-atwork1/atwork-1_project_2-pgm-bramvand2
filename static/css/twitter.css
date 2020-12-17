@@ -1,0 +1,106 @@
+.twitter {
+    width: 112.5rem;
+    margin-top: 5rem;
+    padding: 1rem;
+    max-width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.twitter__image {
+    width: 100%;
+    object-fit: cover;
+}
+
+.twitter__column-one,
+.twitter__column-two {
+    width: 100%;
+    flex-grow: 1;
+}
+
+@media (min-width: 64rem) {
+    .twitter__column-one,
+    .twitter__column-two {
+    width: 50%;
+    }
+}
+
+.twitter__column-two {
+    padding: 2rem 0;
+}
+
+@media (min-width: 64rem) {
+    .twitter__column-two {
+        padding: 0 4rem;
+    }
+}
+
+.twitter-header {
+    width: 100%;
+    height: 5rem;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+}
+.twitter-header__title {
+    width: 10rem;
+}
+
+@media (min-width: 64rem) {
+    .twitter-header__title {
+        width: 18rem;
+    }
+}
+
+.twitter-header__logo {
+    transform: scale(1.4);
+    margin-left: 1rem;
+}
+
+@media (min-width: 64rem) {
+    .twitter-header__logo {
+        transform: scale(2);
+        margin-left: 2rem;
+    }
+}
+
+.twitter h2 {
+    width: 100%;
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+
+.tweet {
+    font-size: 1rem;
+    font-weight: 400;
+    margin-bottom: 2rem;
+}
+
+.tweet p{
+    margin-bottom: 1rem;
+}
+
+.tweet__userdata {
+    width: 100%;
+    display: flex;
+}
+
+.tweet__username {
+    font-weight: 700;
+    margin-right: 1rem;
+}
+
+.bullets {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.bullet {
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    background-color: #000;
+    margin: 0.4rem;
+}
+
