@@ -58,7 +58,7 @@
                <a href="/dag.html?day=${event.day}&slug=${event.slug}">
                <div class="teaser__container">
                    <div class="teaser__image-wrapper">
-                       <img class="teaser__image"src="${event.image !== null ? event.image.thumb : '/app/static/media/img/jpeg/nie-neute.jpg'}" alt="Foto ${event.title}" loading="lazy" >
+                       <img class="teaser__image"src="${event.image !== null ? event.image.thumb : 'static/media/img/jpeg/nie-neute.jpg'}" alt="Foto ${event.title}" loading="lazy" >
                    </div>
                    <span class="teaser__date">${(event.day_of_week).substring(0, 2)} ${event.day} ${event.start} u.</span>
                </div>
@@ -110,7 +110,7 @@
                                     <a href="/dag.html?day=${event.day}&slug=${event.slug}">
                                     <div class="teaser__container">
                                         <div class="teaser__image-wrapper">
-                                            <img class="teaser__image"src="${event.image !== null ? event.image.thumb : '/app/static/media/img/jpeg/nie-neute.jpg'}" alt="Foto ${event.title}" loading="lazy" >
+                                            <img class="teaser__image"src="${event.image !== null ? event.image.thumb : 'static/media/img/jpeg/nie-neute.jpg'}" alt="Foto ${event.title}" loading="lazy" >
                                         </div>
                                         <span class="teaser__date">${(event.day_of_week).substring(0, 2)} ${event.day} ${event.start} u.</span>
                                     </div>

@@ -57,7 +57,7 @@
     background-color: #000;
     color: #fff;
     background-color: #000;
-    background-image: url("/app/static/media/img/jpeg/Gentse-feesten-01.jpg");
+    background-image: url("../media/img/jpeg/Gentse-feesten-01.jpg");
     background-size: cover;
     background-position: 22% 50%;
     background-repeat: no-repeat;
@@ -80,7 +80,7 @@
 .socials__logo {
     width: 15rem;
     background-color: #fff;
-    background-image: url("/app/static/media/img/svg/logo_background.svg");
+    background-image: url("../media/img/svg/logo_background.svg");
     background-repeat: no-repeat;
     background-size: 15rem;
     background-position: center 3rem;
