@@ -8,12 +8,17 @@
             this.cacheElements();
             this.fetchCategoryData();
             this.searchUrlParams();
+            this.onClickToggleList(this.$toggleViewButtonList);
+            this.onClickToggleGrid(this.$toggleViewButtonGrid);
         },
         
         cacheElements(){
             this.$eventTeasers = document.querySelector("#event-teasers-list");
             this.$categoryList = document.querySelector('#category-list');
             this.$eventList = document.querySelector('#event-list');
+            this.$toggleViewButtonList = document.querySelector('.view-select__button--list');            
+            this.$toggleViewButtonGrid = document.querySelector('.view-select__button--grid');            
+            console.log(this.$toggleViewButton);
             console.log('Elements cached!');
         },
 
@@ -88,10 +93,11 @@
         generateEventList() {
             if(this.$eventList !== null){
                 const eventDay = this.searchUrlParams('day');
+                console.log('')
 
                 const eventList = this.categoryData.map((category)=>{
                     const eventsByDay = this.eventData.filter((event) => {
-                        return event.day.indexOf(eventDay) >-1;                               
+                        return event.day === eventDay;                               
                     });
                     
                     const catagorizedEvents = eventsByDay.filter((event) => {
@@ -142,6 +148,39 @@
             } else {
                 console.log('Event list container not found!')
             };
+            
+        },
+
+        onClickToggleList (button){
+            button.addEventListener('click', () =>{
+                if(this.$eventList.classList.contains('viewChange') !== true){
+                    this.$eventList.classList.add('viewChange');
+                } 
+
+                this.$toggleViewButtonGrid.classList.remove('active')
+                this.$toggleViewButtonList.classList.add('active')
+                console.log(this.$toggleViewButtonGrid.classList);
+                
+            });
+
+            
+        },
+
+        onClickToggleGrid (button){
+            button.addEventListener('click', () =>{
+                if(this.$eventList.classList.contains('viewChange')){
+                    this.$eventList.classList.remove('viewChange');
+                } 
+
+                if(this.$toggleViewButtonList.classList.contains('active')){
+                    this.$toggleViewButtonList.classList.remove('active')
+                    this.$toggleViewButtonGrid.classList.add('active')
+
+                }
+                
+            });
+
+            
         },
         
     };

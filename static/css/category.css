@@ -68,7 +68,8 @@
     background-color: #000;
 }
 
-.category__button,
+.category__button--grid,
+.category__button--list,
 .category__button__icon,
 .category__button__text,
 .view-select__button,
@@ -98,12 +99,12 @@
 }
 
 .categories__column-two {
-    padding: 4rem;
+    padding: 2rem;
     flex-grow: 1;
     width: 80rem;
     background-color: #000;
     color: #fff;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -112,6 +113,8 @@
 @media (min-width: 64rem) {
     .categories__column-two {
         max-height: 50rem;
+        padding: 4rem;
+        font-size: 1.5rem;
     }
 }
 
@@ -142,7 +145,8 @@
     justify-content: flex-end;
 }
 
-.view-select__button {
+.view-select__button--grid,
+.view-select__button--list {
     cursor: pointer;
     padding: 0.5rem;
     margin-left: 1rem;
@@ -150,10 +154,24 @@
 
 }
 
-.view-select__button:hover {
+.view-select__button--grid:hover, 
+.view-select__button--list:hover {
     background-color: #000;
 }
 
-.view-select__button:hover .view-select__button__icon path {
+.active.view-select__button--grid,
+.active.view-select__button--list {
+    background-color: #000;
+}
+
+.view-select__button--grid:hover .view-select__button__icon path,
+.view-select__button--list:hover .view-select__button__icon path {
+    fill: #fff;
+}
+
+
+
+.active.view-select__button--grid .view-select__button__icon path,
+.active.view-select__button--list .view-select__button__icon path {
     fill: #fff;
 }

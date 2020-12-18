@@ -15,21 +15,37 @@
     flex-wrap: wrap;
 }
 
+.viewChange .teaser {
+    width: 100%;
+    padding: 1rem;
+    background-color: #000;
+    flex-wrap: nowrap;    
+}
+
 @media (min-width: 52rem) {
     .teaser {
         width: 47%;
     }
 }
 
-@media (min-width: 65rem) {
+@media (min-width: 64rem) {
     .teaser {
-        width: 31.9%;
+        width: 31%;
     }
 }
 
 .teaser a{
     width: 100%;
     color: #000;
+}
+
+.viewChange .teaser a {
+    width: 100%;
+    color: #fff;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
 }
 
 
@@ -39,15 +55,54 @@
     font-weight: 900;
 }
 
+.viewChange .teaser h3 {
+    width: 35rem;
+    margin: 0.5rem 0;
+    padding: 0;
+    font-size: 1rem;
+}
+
+@media (min-width: 56rem) {
+    .viewChange .teaser h3{
+        font-size: 1.5rem;
+    }
+}
+
+@media (min-width: 71rem) {
+    .viewChange .teaser h3{
+        padding: 0 1rem;
+        text-align: right;
+    }
+}
+
 .teaser p {
     margin-top: 1rem;
     font-weight: 400;
+}
+
+.viewChange .teaser p {
+    width: 15rem;
+    margin: 0.5rem 0;
+    font-size: 1rem;
+    text-align: left;
+}
+
+@media (min-width: 71rem) {
+    .viewChange .teaser p{
+        text-align: right;
+    }
 }
 
 .teaser__container {
     width: 100%;
     position: relative;
     margin-bottom: 3rem;
+}
+
+.viewChange .teaser__container {
+    width:15rem;
+    position: static;
+    margin-bottom: 0rem;
 }
 
 .teaser__image-wrapper {    
@@ -65,6 +120,10 @@
     transition: all 0.2s ease;
 }
 
+.viewChange .teaser__image {
+    display: none;
+}
+
 .teaser a:hover .teaser__image{
     transform: scale(1.1);
 }
@@ -79,3 +138,13 @@
     font-size: 1.5rem;
     font-weight: 700;
 }
+
+.viewChange .teaser__date {
+    position: static;
+    bottom: auto;
+    left: auto;
+    margin: 0.5rem 0;
+    padding: 0;
+    font-size: 1.2rem;
+}
+

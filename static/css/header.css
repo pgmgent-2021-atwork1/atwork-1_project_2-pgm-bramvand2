@@ -229,7 +229,7 @@
 .header--day.header__title {
     width: 20rem;
     position: absolute;
-    top: -10vh;
+    top: -14vh;
     right: 1.5rem;
     display: flex;
     flex-wrap: wrap;
