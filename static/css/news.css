@@ -95,17 +95,3 @@
     margin-top: 2rem;
 }
 
-.news__button {
-    cursor: pointer;
-    margin-top: 2rem;
-    border: #000 solid 0.2rem;
-    padding: 1.5rem 2.5rem;
-    font-size: 1rem;
-    font-weight: 600;
-    transition: all 0.2s ease-in-out;
-}
-
-.news__button:hover {
-   color: #fff;
-   background-color: #000;
-}

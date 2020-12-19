@@ -47,12 +47,9 @@
     align-items: baseline;
 }
 
-.category-title button {
-    cursor: pointer;
-}
-
-.category-top__button  svg{
+.category-top__button {
     margin-left: 2rem;
+    cursor: pointer;
 }
 
 .category__button {
@@ -120,7 +117,7 @@
 
 .categories__column-two li {
     width: 100%;
-    margin: 0.5rem 0rem
+    margin: 1rem 0rem
 }
 
 @media (min-width: 64rem) {

@@ -4,12 +4,13 @@
 
     const app = {
         initialise() {
-            console.log('App initialised')
+            console.log('App initialised');
             this.cacheElements();
             this.fetchCategoryData();
             this.searchUrlParams();
             this.onClickToggleList(this.$toggleViewButtonList);
             this.onClickToggleGrid(this.$toggleViewButtonGrid);
+            this.currentDate();
         },
         
         cacheElements(){
@@ -18,7 +19,17 @@
             this.$eventList = document.querySelector('#event-list');
             this.$toggleViewButtonList = document.querySelector('.view-select__button--list');            
             this.$toggleViewButtonGrid = document.querySelector('.view-select__button--grid');            
-            console.log(this.$toggleViewButton);
+            this.$eventDetail = document.querySelector('.event-detail');
+            this.$eventDetailImage = document.querySelector('.event-detail__image-wrapper');
+            this.$eventDetailTitle = document.querySelector('.event-detail__title');
+            this.$eventDetailSchedule = document.querySelector('.event-detail__schedule');
+            this.$eventDetailLocation = document.querySelector('.event-detail__location');       
+            this.$eventDetailSynopsis = document.querySelector('.event-detail__synopsis');
+            this.$eventDetailUrl = document.querySelector('.event-detail__url');
+            this.$eventDetailOrganizer = document.querySelector('.event-detail__organizer');
+            this.$eventDetailCategories = document.querySelector('.event-detail__categories');
+            this.$organizerEventsTitle = document.querySelector('.organizer-events__header');
+            this.$organizersEventList = document.querySelector('#organizer-events__list')
             console.log('Elements cached!');
         },
 
@@ -47,34 +58,37 @@
                     this.eventData = json;
                     this.updateEventTeasers();
                     this.generateEventList();
+                    this.updateEventDetail();
                     })
                 .catch((error) => console.error(error));
         },       
 
         updateEventTeasers() {
-           let eventsArray = [ 
-               this.eventData[(Math.floor(Math.random()*this.eventData.length-1))],
-               this.eventData[(Math.floor(Math.random()*this.eventData.length-1))],
-               this.eventData[(Math.floor(Math.random()*this.eventData.length-1))],
-           ];
+            if(this.$eventTeasers !== null){
+                let eventsArray = [ 
+                    this.eventData[(Math.floor(Math.random()*this.eventData.length-1))],
+                    this.eventData[(Math.floor(Math.random()*this.eventData.length-1))],
+                    this.eventData[(Math.floor(Math.random()*this.eventData.length-1))],
+                ];
 
-           const eventTeasers = eventsArray.map((event) => {
-               return `<li class="teaser"> 
-               <a href="/dag.html?day=${event.day}&slug=${event.slug}">
-               <div class="teaser__container">
-                   <div class="teaser__image-wrapper">
-                       <img class="teaser__image"src="${event.image !== null ? event.image.thumb : 'static/media/img/jpeg/nie-neute.jpg'}" alt="Foto ${event.title}" loading="lazy" >
-                   </div>
-                   <span class="teaser__date">${(event.day_of_week).substring(0, 2)} ${event.day} ${event.start} u.</span>
-               </div>
-               <h3>${event.title}</h3>
-               <p>${event.location}</p>
-               </a>
-           </li>`
-           }).join('');
-           
-           this.$eventTeasers.innerHTML = eventTeasers;
-           console.log('Event teasers updated!');            
+                const eventTeasers = eventsArray.map((event) => {
+                    return `<li class="teaser"> 
+                    <a href="/detail.html?day=${event.day}&slug=${event.slug}">
+                    <div class="teaser__container">
+                        <div class="teaser__image-wrapper">
+                            <img class="teaser__image"src="${event.image !== null ? event.image.thumb : 'static/media/img/jpeg/nie-neute.jpg'}" alt="Foto ${event.title}" loading="lazy" >
+                        </div>
+                        <span class="teaser__date">${(event.day_of_week).substring(0, 2)} ${event.day} ${event.start} u.</span>
+                    </div>
+                    <h3>${event.title}</h3>
+                    <p>${event.location}</p>
+                    </a>
+                </li>`
+                }).join('');
+                
+                this.$eventTeasers.innerHTML = eventTeasers;
+                console.log('Event teasers updated!');
+            }           
         },
 
         generateCategoryList() {
@@ -85,7 +99,7 @@
 
             this.$categoryList.innerHTML = categoryList;
             } else {
-                console.log('Category list container not found!')
+                console.log('Category list container not found!');
             };
             
         },
@@ -93,8 +107,6 @@
         generateEventList() {
             if(this.$eventList !== null){
                 const eventDay = this.searchUrlParams('day');
-                console.log('')
-
                 const eventList = this.categoryData.map((category)=>{
                     const eventsByDay = this.eventData.filter((event) => {
                         return event.day === eventDay;                               
@@ -108,12 +120,12 @@
                         return event1.sort_key.localeCompare(event2.sort_key);
                     });
 
-                    console.log(catagorizedEvents.length > 0)
+                    console.log(catagorizedEvents.length > 0);
 
                     const catagorizedEventsList =
                     catagorizedEvents.map((event) => {                        
                         return `<li class="teaser"> 
-                                    <a href="/dag.html?day=${event.day}&slug=${event.slug}">
+                                    <a href="/detail.html?day=${event.day}&slug=${event.slug}">
                                     <div class="teaser__container">
                                         <div class="teaser__image-wrapper">
                                             <img class="teaser__image"src="${event.image !== null ? event.image.thumb : 'static/media/img/jpeg/nie-neute.jpg'}" alt="Foto ${event.title}" loading="lazy" >
@@ -146,44 +158,113 @@
                 }).join('');
                 this.$eventList.innerHTML = eventList;
             } else {
-                console.log('Event list container not found!')
+                console.log('Event list container not found!');
             };
             
         },
 
-        onClickToggleList (button){
-            button.addEventListener('click', () =>{
-                if(this.$eventList.classList.contains('viewChange') !== true){
-                    this.$eventList.classList.add('viewChange');
-                } 
+        onClickToggleList (button) {
+            if(button !== null){
+                button.addEventListener('click', () =>{
+                    if(this.$eventList.classList.contains('teaser--list') !== true){
+                        this.$eventList.classList.add('teaser--list');
+                    };
 
-                this.$toggleViewButtonGrid.classList.remove('active')
-                this.$toggleViewButtonList.classList.add('active')
-                console.log(this.$toggleViewButtonGrid.classList);
+                    this.$toggleViewButtonGrid.classList.remove('active');
+                    this.$toggleViewButtonList.classList.add('active');
+                    console.log(this.$toggleViewButtonGrid.classList);
+                    
+                });
+
+            };
+        },
+
+        onClickToggleGrid (button) {
+            if(button !== null ){
+                button.addEventListener('click', () =>{
+                    if(this.$eventList.classList.contains('teaser--list')){
+                        this.$eventList.classList.remove('teaser--list');
+                    }; 
+
+                    if(this.$toggleViewButtonList.classList.contains('active')){
+                        this.$toggleViewButtonList.classList.remove('active');
+                        this.$toggleViewButtonGrid.classList.add('active');
+
+                    };
+                    
+                });
+
+            };
+        },
+
+        currentDate () {
+            const eventDate = '#day' + this.searchUrlParams('day');
+            const $pageDate = document.querySelector(eventDate);
+            $pageDate.classList.add('current-date');
+        },
+
+        updateEventDetail(){
+            if(this.$eventDetail !== null){
+                const urlDay = this.searchUrlParams('day');
+                const urlSlug = this.searchUrlParams('slug');
+
+                const eventDetail = this.eventData.find((event) => {
+                    console.log(event.organizer)
+                    return event.day === urlDay && event.slug === urlSlug;            
+                });
                 
+                this.$eventDetailImage.innerHTML = `<img class="event-detail__image" src="${eventDetail.image !== null ? eventDetail.image.full : 'static/media/img/jpeg/nie-neute.jpg'}" alt="Foto ${eventDetail.title}" loading="lazy" >`;
+                this.$eventDetailTitle.innerHTML = eventDetail.title;
+                this.$eventDetailSchedule.innerHTML = `${eventDetail.day_of_week} ${eventDetail.day} juli - ${eventDetail.start} > ${eventDetail.end}`;
+                this.$eventDetailLocation.innerHTML = eventDetail.location;
+                this.$eventDetailSynopsis.innerHTML = eventDetail.description !== undefined ? eventDetail.description : `Geen beschrijving gevonden.` ;
+                if(eventDetail.url !== null){
+                    this.$eventDetailUrl.innerHTML = `<a class="link--underlined" href="${ eventDetail.url}">${ eventDetail.url}</a>`;
+                }else{
+                    this.$eventDetailUrl.innerHTML = `/`
+                };
+                this.$eventDetailOrganizer.innerHTML = eventDetail.organizer;
+                this.$eventDetailCategories.innerHTML = eventDetail.category.join(' ');
+                this.$organizerEventsTitle.innerHTML = `Andere evenementen van ${eventDetail.organizer}`
+                this.updateOrganizerEventList(eventDetail.organizer);
+                
+                console.log('Event detail updated!');
+            } else {
+                console.log('Event detail container not found!')
+            };
+
+        },
+
+        updateOrganizerEventList (organizer){
+            console.log(organizer);
+            const filteredEvents = this.eventData.filter((event) => {
+                return event.organizer.indexOf(organizer) > -1;
             });
 
             
+            const eventsList = filteredEvents.map((event) => {
+                return `<li class="teaser"> 
+                <a href="/detail.html?day=${event.day}&slug=${event.slug}">
+                <div class="teaser__container">
+                    <div class="teaser__image-wrapper">
+                        <img class="teaser__image"src="${event.image !== null ? event.image.thumb : 'static/media/img/jpeg/nie-neute.jpg'}" alt="Foto ${event.title}" loading="lazy" >
+                    </div>
+                    <span class="teaser__date">${(event.day_of_week).substring(0, 2)} ${event.day} ${event.start} u.</span>
+                </div>
+                <h3>${event.title}</h3>
+                <p>${event.location}</p>
+                </a>
+            </li>`
+            }).join('');
+           
+            this.$organizersEventList.innerHTML = eventsList;
         },
 
-        onClickToggleGrid (button){
-            button.addEventListener('click', () =>{
-                if(this.$eventList.classList.contains('viewChange')){
-                    this.$eventList.classList.remove('viewChange');
-                } 
 
-                if(this.$toggleViewButtonList.classList.contains('active')){
-                    this.$toggleViewButtonList.classList.remove('active')
-                    this.$toggleViewButtonGrid.classList.add('active')
-
-                }
-                
-            });
-
-            
-        },
         
     };
+
+    
 
     app.initialise();
     console.log('App running!');

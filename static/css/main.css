@@ -8,7 +8,7 @@
 *:focus {
     outline-color: #e20613;
     outline-style: dotted;
-    outline-width: 0.2rem;
+    outline-width: 0.1rem;
     outline-offset: -0.1rem;
 }
 
@@ -52,6 +52,32 @@ input {
 .link--underlined {
     color: #000;
     text-decoration: underline;
+    background: linear-gradient(to right, rgb(219, 219, 219) 100%, transparent 0);
+    background-repeat: no-repeat;
+    background-size: 0% 40%;
+    background-position: 0 bottom;
+    transition: all 0.2s ease;
 }
+
+.link--underlined:hover {
+    background-size: 100% 40%;
+}
+
+.button--big {
+    cursor: pointer;
+    margin-top: 2rem;
+    border: #000 solid 0.2rem;
+    padding: 1.5rem 2.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: all 0.2s ease-in-out;
+}
+
+.button--big:hover {
+   color: #fff;
+   background-color: #000;
+}
+
+
 
 

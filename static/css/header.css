@@ -121,7 +121,6 @@
     height: 2.75rem;
     width: 20rem;
     padding: 0.2rem 1rem;
-    outline-style: none;
     border: 0;
 
 }    
@@ -199,6 +198,11 @@
 
 .current-page {
     opacity: 1;
+}
+
+.header__date a.current-date {
+    background-color: #fff;
+    color: #000;
 }
 
 
