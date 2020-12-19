@@ -1,6 +1,7 @@
 (()=>{
     const EVENTS_API ="https://www.pgm.gent/data/gentsefeesten/events_500.json";
     const CATEGORY_API ="https://www.pgm.gent/data/gentsefeesten/categories.json";
+    const NEWS_API = "https://www.pgm.gent/data/gentsefeesten/news.json"
 
     const app = {
         initialise() {
@@ -10,11 +11,20 @@
             this.searchUrlParams();
             this.onClickToggleList(this.$toggleViewButtonList);
             this.onClickToggleGrid(this.$toggleViewButtonGrid);
+            this.onClickShowProgram();
+            this.onClickShowOverlay();
             this.currentDate();
         },
         
         cacheElements(){
+            this.$html = document.querySelector('html');
+            this.$hamburgerButton = document.querySelector('#menu__hamburger-button');
+            this.$hamburgerOverlay = document.querySelector('.menu__hamburger-overlay');
+            this.$programButton = document.querySelector('#program__button');
+            this.$programButtonArrow = document.querySelector('.program__button__arrow')
+            this.$hamburgerOverlayDays = document.querySelector('.hamburger-overlay__menu__day-list');
             this.$eventTeasers = document.querySelector("#event-teasers-list");
+            this.$newsList = document.querySelector('.news__list')
             this.$categoryList = document.querySelector('#category-list');
             this.$eventList = document.querySelector('#event-list');
             this.$toggleViewButtonList = document.querySelector('.view-select__button--list');            
@@ -46,6 +56,7 @@
                 .then((json) => {
                     this.categoryData = json;
                     this.fetchEventData();
+                    this.fetchNewsData();
                     this.generateCategoryList();
                     })
                 .catch((error) => console.error(error));
@@ -56,14 +67,24 @@
                 .then((response) => response.json())
                 .then((json) => {
                     this.eventData = json;
-                    this.updateEventTeasers();
+                    this.generateEventTeasers();
                     this.generateEventList();
                     this.updateEventDetail();
                     })
                 .catch((error) => console.error(error));
-        },       
+        },
+        
+        fetchNewsData() {
+            fetch(NEWS_API, {})
+                .then((response) => response.json())
+                .then((json) => {
+                    this.newsData = json;
 
-        updateEventTeasers() {
+                    })
+                .catch((error) => console.error(error));
+        }, 
+
+        generateEventTeasers() {
             if(this.$eventTeasers !== null){
                 let eventsArray = [ 
                     this.eventData[(Math.floor(Math.random()*this.eventData.length-1))],
@@ -163,6 +184,25 @@
             
         },
 
+        onClickShowOverlay () {
+            this.$hamburgerButton.addEventListener('click', () => {
+                this.$hamburgerOverlay.classList.toggle('shown');
+                this.$hamburgerButton.classList.toggle('exit')                
+                if(this.$html.style.overflowY === 'hidden'){
+                    this.$html.style.overflowY='';
+                }else{
+                    this.$html.style.overflowY='hidden';
+                };
+            });
+        },
+
+        onClickShowProgram () {
+            this.$programButton.addEventListener('click', () =>{
+                this.$hamburgerOverlayDays.classList.toggle('open');
+                this.$programButtonArrow.classList.toggle('open');
+            });
+        },
+
         onClickToggleList (button) {
             if(button !== null){
                 button.addEventListener('click', () =>{
@@ -200,7 +240,9 @@
         currentDate () {
             const eventDate = '#day' + this.searchUrlParams('day');
             const $pageDate = document.querySelector(eventDate);
-            $pageDate.classList.add('current-date');
+            if($pageDate !== null){
+                $pageDate.classList.add('current-date');
+            }
         },
 
         updateEventDetail(){
@@ -209,24 +251,30 @@
                 const urlSlug = this.searchUrlParams('slug');
 
                 const eventDetail = this.eventData.find((event) => {
-                    console.log(event.organizer)
                     return event.day === urlDay && event.slug === urlSlug;            
                 });
-                
+               
                 this.$eventDetailImage.innerHTML = `<img class="event-detail__image" src="${eventDetail.image !== null ? eventDetail.image.full : 'static/media/img/jpeg/nie-neute.jpg'}" alt="Foto ${eventDetail.title}" loading="lazy" >`;
                 this.$eventDetailTitle.innerHTML = eventDetail.title;
                 this.$eventDetailSchedule.innerHTML = `${eventDetail.day_of_week} ${eventDetail.day} juli - ${eventDetail.start} > ${eventDetail.end}`;
                 this.$eventDetailLocation.innerHTML = eventDetail.location;
                 this.$eventDetailSynopsis.innerHTML = eventDetail.description !== undefined ? eventDetail.description : `Geen beschrijving gevonden.` ;
+               
                 if(eventDetail.url !== null){
                     this.$eventDetailUrl.innerHTML = `<a class="link--underlined" href="${ eventDetail.url}">${ eventDetail.url}</a>`;
                 }else{
                     this.$eventDetailUrl.innerHTML = `/`
                 };
-                this.$eventDetailOrganizer.innerHTML = eventDetail.organizer;
-                this.$eventDetailCategories.innerHTML = eventDetail.category.join(' ');
+                
+                this.$eventDetailOrganizer.innerHTML = `<a class="link--underlined" href="#">${eventDetail.organizer}</a>`;
+                
+                this.$eventDetailCategories.innerHTML =  
+                    eventDetail.category.map((category) => {
+                        return `<a class="link--underlined" href="#">${category}</a>`;
+                    }).join(' / ');
+
                 this.$organizerEventsTitle.innerHTML = `Andere evenementen van ${eventDetail.organizer}`
-                this.updateOrganizerEventList(eventDetail.organizer);
+                this.generateOrganizerEventList(eventDetail.organizer);
                 
                 console.log('Event detail updated!');
             } else {
@@ -235,7 +283,7 @@
 
         },
 
-        updateOrganizerEventList (organizer){
+        generateOrganizerEventList (organizer){
             console.log(organizer);
             const filteredEvents = this.eventData.filter((event) => {
                 return event.organizer.indexOf(organizer) > -1;

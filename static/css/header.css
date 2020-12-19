@@ -60,31 +60,6 @@
     justify-content: space-between; 
 }
 
-.menu__hamburger__icon {
-    cursor: pointer;
-    width: 2.5rem;
-    display: flex;
-    flex-wrap: wrap;    
-    justify-content: flex-end;
-}
-
-@media (min-width: 80rem) {
-    .menu__hamburger__icon{
-        display: none;
-    }
-}
-
-.menu__hamburger__icon li {
-    background-color: #fff;
-    height: 0.3rem;
-    width: 2rem;
-    margin: 0.2rem;
-    border-radius: 0.5rem;
-}
-
-.menu__hamburger__icon li:nth-child(2){
-    width: 1.6rem;
-}
 
 .menu__normal {
     display: none;

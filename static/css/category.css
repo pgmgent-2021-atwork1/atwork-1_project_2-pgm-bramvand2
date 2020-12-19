@@ -65,13 +65,15 @@
     background-color: #000;
 }
 
+.view-select__button--grid,
+.view-select__button--list,
 .category__button--grid,
 .category__button--list,
 .category__button__icon,
 .category__button__text,
 .view-select__button,
 .view-select__button__icon {
-    transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease;
 }
 
 .category__button:hover .category__button__icon {
