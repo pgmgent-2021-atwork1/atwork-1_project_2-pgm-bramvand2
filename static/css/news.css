@@ -57,7 +57,7 @@
 @media (min-width: 64rem) {
     .news-article__date{
         bottom: 45%;
-        left: -2rem;
+        left: -3rem;
         transform: rotate(-90deg);
         transform: bottom left;
         font-size: 1.6rem;

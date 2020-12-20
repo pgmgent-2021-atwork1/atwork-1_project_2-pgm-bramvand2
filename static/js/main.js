@@ -14,10 +14,12 @@
             this.onClickShowProgram();
             this.onClickShowOverlay();
             this.currentDate();
+            window.onload = this.onLoadBackground();
         },
         
         cacheElements(){
             this.$html = document.querySelector('html');
+            this.$header = document.querySelector('.header__top')
             this.$hamburgerButton = document.querySelector('#menu__hamburger-button');
             this.$hamburgerOverlay = document.querySelector('.menu__hamburger-overlay');
             this.$programButton = document.querySelector('#program__button');
@@ -79,17 +81,37 @@
                 .then((response) => response.json())
                 .then((json) => {
                     this.newsData = json;
-
+                    this.generateNewsList();
                     })
                 .catch((error) => console.error(error));
-        }, 
+        },
+        
+        onLoadBackground(){
+            const backgroundArray =[
+                `url('static/media/img/jpeg/Gentse-feesten-01.jpg')`,
+                `url('static/media/img/jpeg/Gentse-feesten-02.jpg')`,
+                `url('static/media/img/jpeg/Gentse-feesten-03.jpg')`,
+                `url('static/media/img/jpeg/Gentse-feesten-04.jpg')`,
+                `url('static/media/img/jpeg/Gentse-feesten-05.jpg')`,
+                `url('static/media/img/jpeg/Gentse-feesten-06.jpg')`,
+                `url('static/media/img/jpeg/Gentse-feesten-07.jpg')`,
+                `url('static/media/img/jpeg/Gentse-feesten-08.jpg')`,
+                `url('static/media/img/jpeg/Gentse-feesten-09.jpg')`,
+                
+            ];
+
+            console.log(this.$header.style.background)
+
+            this.$header.style.backgroundImage = backgroundArray[(Math.floor(Math.random()*backgroundArray.length))];
+            console.log(this.$header.style.background)
+        },
 
         generateEventTeasers() {
             if(this.$eventTeasers !== null){
                 let eventsArray = [ 
-                    this.eventData[(Math.floor(Math.random()*this.eventData.length-1))],
-                    this.eventData[(Math.floor(Math.random()*this.eventData.length-1))],
-                    this.eventData[(Math.floor(Math.random()*this.eventData.length-1))],
+                    this.eventData[(Math.floor(Math.random()*this.eventData.length))],
+                    this.eventData[(Math.floor(Math.random()*this.eventData.length))],
+                    this.eventData[(Math.floor(Math.random()*this.eventData.length))],
                 ];
 
                 const eventTeasers = eventsArray.map((event) => {
@@ -110,6 +132,37 @@
                 this.$eventTeasers.innerHTML = eventTeasers;
                 console.log('Event teasers updated!');
             }           
+        },
+
+        generateNewsList(){
+         
+            function getMonthDay(miliseconds){
+                const newDate = new Date(miliseconds);
+                const day = ((newDate.getDay()+1) < 10 ? '0' : '') + (newDate.getDay()+1);
+                const month = ((newDate.getMonth()+1) < 10 ? '0' : '') + (newDate.getMonth()+1);
+                return `${day} / ${month}`
+            };
+            
+            const newsList = this.newsData.slice(0, 3).map((article) => {
+                console.log(article.picture)
+                return `<li  class="news-article__wrapper">
+                <a class="news-article" href="">
+                <div class="news-article__column-one">
+                    <img class="news-article__image" src="${article.picture.medium}" alt="${article.title}">
+                    <span class="news-article__date">${getMonthDay(article.publishedAt)}</span>
+                </div>
+                <div class="news-article__column-two">
+                    <h3>${article.title}</h3>
+                    <p>${article.synopsis}</p>
+                    <img src="static/media/img/svg/Arrow right-optimised.svg" alt="Pijl naar rechts">
+                </div>`
+            }).join('');
+
+            if(this.$newsList !== null){
+                this.$newsList.innerHTML = newsList;
+            }else{
+                console.log('News container not found!')
+            }        
         },
 
         generateCategoryList() {
@@ -288,9 +341,8 @@
             const filteredEvents = this.eventData.filter((event) => {
                 return event.organizer.indexOf(organizer) > -1;
             });
-
             
-            const eventsList = filteredEvents.map((event) => {
+            const eventsList = filteredEvents.slice(0, 5).map((event) => {
                 return `<li class="teaser"> 
                 <a href="/detail.html?day=${event.day}&slug=${event.slug}">
                 <div class="teaser__container">
