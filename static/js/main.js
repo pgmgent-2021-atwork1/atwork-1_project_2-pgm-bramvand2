@@ -116,7 +116,7 @@
 
                 const eventTeasers = eventsArray.map((event) => {
                     return `<li class="teaser"> 
-                    <a href="/detail.html?day=${event.day}&slug=${event.slug}">
+                    <a href="detail.html?day=${event.day}&slug=${event.slug}">
                     <div class="teaser__container">
                         <div class="teaser__image-wrapper">
                             <img class="teaser__image"src="${event.image !== null ? event.image.thumb : 'static/media/img/jpeg/nie-neute.jpg'}" alt="Foto ${event.title}" loading="lazy" >
