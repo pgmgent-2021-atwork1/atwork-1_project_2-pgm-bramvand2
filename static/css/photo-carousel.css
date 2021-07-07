@@ -1,0 +1,30 @@
+.photo-carousel {
+    position: relative;
+    margin-top: 5rem;
+    width: 112.5rem;
+    max-width: 100%;
+}
+
+.photo-carousel__image {
+    width: 100%;
+}
+
+.photo-carousel__nav {
+    position: absolute;
+    width: 10rem;
+    left: calc(50% - 5rem);
+    bottom: 0;
+    background-color: #fff;
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.photo-carousel__nav img {
+    margin-right: 1rem;
+}
+
+.photo-carousel__nav img:first-child{
+    transform: rotate(180deg);
+}
